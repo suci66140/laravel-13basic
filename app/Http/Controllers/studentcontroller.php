@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class studentcontroller extends Controller
@@ -11,7 +12,10 @@ class studentcontroller extends Controller
      */
     public function index()
     {
-    return view('student.index', ['title' => 'student']);
+        return view('student.index', [
+            'title' => 'Student',
+            'students' => Student::latest()->get(),
+        ]);
     }
 
     /**
@@ -19,16 +23,31 @@ class studentcontroller extends Controller
      */
     public function create()
     {
-    return view('student.create', ['title' => 'Create student']);
+    return view('student.create', ['title' => 'Create Student']);
     }
+
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
-    }
+        $validated = $request->validate([
+    'name' => 'required',
+    'nim' => 'required|numeric|digits:12',
+    ],
+    [
+    'name.required' => 'Nama wajib di input',
+    'nim.required' => 'NIM wajib di input',
+    'nim.numeric' => 'NIM wajib berupa angka',
+    'nim.digits' => 'NIM wajib 12 digit',
+    ]
+    );
+
+
+Student::create($validated);
+return redirect('/student');
+}
 
     /**
      * Display the specified resource.
