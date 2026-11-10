@@ -34,19 +34,18 @@ class studentcontroller extends Controller
     {
         $validated = $request->validate([
     'name' => 'required',
-    'nim' => 'required|numeric|digits:12',
+    'nim' => 'required|numeric|digits:15',
     ],
     [
     'name.required' => 'Nama wajib di input',
     'nim.required' => 'NIM wajib di input',
     'nim.numeric' => 'NIM wajib berupa angka',
-    'nim.digits' => 'NIM wajib 12 digit',
+    'nim.digits' => 'NIM wajib 15 digit',
     ]
     );
 
-
 Student::create($validated);
-return redirect('/student');
+return to_route('student.index')->withSuccess('Data berhasil ditambahkan');
 }
 
     /**
@@ -60,24 +59,42 @@ return redirect('/student');
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(student $student)
     {
-        //
+    return view('student.edit', [
+    'title' => 'Edit Student',
+    'student' => $student,
+    ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Student $student)
     {
-        //
+        $validated = $request->validate([
+    'name' => 'required',
+    'nim' => 'required|numeric|digits:15',
+    ],
+    [
+    'name.required' => 'Nama wajib di input',
+    'nim.required' => 'NIM wajib di input',
+    'nim.numeric' => 'NIM wajib berupa angka',
+    'nim.digits' => 'NIM wajib 12 digit',
+    ]
+    );
+
+
+$student->update($validated);
+return to_route('student.index')->withSuccess('Data berhasil diubah');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Student $student)
     {
-        //
+        $student->delete();
+return to_route('student.index')->withSuccess('Data berhasil dihapus');
     }
 }
