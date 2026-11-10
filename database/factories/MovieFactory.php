@@ -6,16 +6,15 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class MovieFactory extends Factory
 {
-    protected $model = \App\Models\Movie::class;
-
     public function definition(): array
     {
         return [
-            'title' => fake()->sentence(3),
-            'director' => fake()->name(),
-            'genre' => fake()->randomElement(['Action', 'Drama', 'Sci-Fi', 'Horror', 'Comedy', 'Animation']),
-            'release_year' => fake()->numberBetween(2000, 2026),
-            'rating' => fake()->randomFloat(1, 5.0, 10.0),
+            'title'        => fake()->sentence(3),
+            'director'     => fake()->name(),
+            'release_year' => fake()->year(),
+            'genre'        => fake()->randomElement(['Action', 'Drama', 'Comedy', 'Sci-Fi', 'Horror', 'Romance']),
+            'rating'       => fake()->randomFloat(1, 1, 10),
+            'synopsis'     => fake()->paragraph(),
         ];
     }
 }
