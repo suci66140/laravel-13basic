@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\Student;
+use App\Models\Movie;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        Student::factory(100)->create();
+        Movie::factory(100)->create();
     }
 }
